@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reclamos</title>
+</head>
+<body>
+    <nav>
+        <a href={% url "inicio" %}>Inicio</a>
+        <a href={% url "reclamo_crear" %}>Crear Reclamos</a>
+        <a href={% url "reclamo_listar" %}>Listar Reclamos</a>
+    </nav>
+    {% block content %} <!-- Contenido específico de cada página irá aquí --> {% endblock %} 
+</body>
+</html>
