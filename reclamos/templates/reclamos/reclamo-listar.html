@@ -2,13 +2,15 @@
 {% block content %} 
     <h1>Bienvenidos a Reclamos</h1> 
     {% if reclamos %}
-        <ul>
+    <div class="container mt-4">
+        <ul class="list-group">
             {% for reclamo in reclamos %}
-            <li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
                 {{reclamo}}
             </li>
             {% endfor %}
         </ul>
+    </div>
     {% else %}
     No existen reclamos cargados.
     {% endif %}

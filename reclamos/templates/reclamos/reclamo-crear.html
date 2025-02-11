@@ -1,9 +1,35 @@
 {% extends 'reclamos/base.html' %} 
+{% load widget_tweaks %}
 {% block content %} 
 <h1>Bienvenidos a Reclamos</h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{formulario}}
-    <input type="submit" value="Crear">
-</form>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <form method="POST" class="needs-validation" novalidate>
+              {% csrf_token %}
+              {% for field in formulario %}
+                <div class="mb-3">
+                  <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                  {{ field|add_class:"form-control" }}
+                  {% if field.help_text %}
+                    <div class="form-text">{{ field.help_text }}</div>
+                  {% endif %}
+                  {% if field.errors %}
+                    <div class="invalid-feedback d-block">
+                      {{ field.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
