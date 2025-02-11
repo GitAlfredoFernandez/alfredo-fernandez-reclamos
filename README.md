@@ -29,4 +29,5 @@ Sistema de gestión de reclamos para Alfredo Fernandez. Esta aplicación permite
 - Django
 - Python
 - SQL Lite DB
+- Bootstrap (https://getbootstrap.com/)
 
