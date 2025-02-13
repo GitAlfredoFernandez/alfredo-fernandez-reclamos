@@ -26,5 +26,9 @@ def reclamo_crear(request):
     return render(request, 'reclamos/reclamo-crear.html', {'formulario': formulario})
 
 def reclamo_listar(request):
-    reclamos = Reclamo.objects.all()
-    return render(request, 'reclamos/reclamo-listar.html', {'reclamos': reclamos})
+    busqueda = request.GET.get('q',None)
+    if busqueda:
+        reclamos = Reclamo.objects.filter(titulo__icontains=busqueda)
+    else:
+        reclamos = Reclamo.objects.all()
+    return render(request, 'reclamos/reclamo-listar.html', context={'reclamos': reclamos})

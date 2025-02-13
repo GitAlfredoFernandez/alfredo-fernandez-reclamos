@@ -1,6 +1,15 @@
 {% extends 'reclamos/base.html' %} 
 {% block content %} 
     <h1>Bienvenidos a Reclamos</h1> 
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <form action="{% url 'reclamo_listar'%}" method="get" class="d-flex gap-2">
+              <input type="text" name="q" placeholder="Buscar reclamo" class="form-control">
+            </form>
+          </div>
+        </div>
+      </div>
     {% if reclamos %}
     <div class="container mt-4">
         <ul class="list-group">
