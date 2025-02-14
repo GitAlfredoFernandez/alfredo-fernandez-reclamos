@@ -1,18 +1,21 @@
 {% extends 'reclamos/base.html' %} 
+{% block titulo %}Lista de Reclamos{% endblock %} 
 {% block content %} 
-    <h1>Bienvenidos a Reclamos</h1> 
+    <h1>Lista de reclamos</h1> 
     <div class="container mt-4">
         <div class="row justify-content-center">
           <div class="col-md-6">
             <form action="{% url 'reclamo_listar'%}" method="get" class="d-flex gap-2">
-              <input type="text" name="q" placeholder="Buscar reclamo" class="form-control">
+              <input type="text" name="q" placeholder="Buscar reclamo x titulo" class="form-control" type="submit">
             </form>
           </div>
         </div>
       </div>
+      <br>
     {% if reclamos %}
-      <div class="table-responsive">
-          <table class="table table-bordered">
+      <div class="table-responsive-sm">
+        <div class="table-wrapper">
+          <table class="table table-hover table-bordered align-middle w-auto mx-auto">
             <thead>
                   <tr>
                       <th>Titulo</th>
@@ -39,9 +42,21 @@
                       </td>
                     </tr>
                     {% endfor %}
+                  </tbody>
           </table>
+        </div>
       </div>
     {% else %}
-    No existen reclamos cargados.
+    <div class="table-responsive-sm">
+      <div class="table-wrapper">
+        <table class="table table-hover table-bordered align-middle w-auto mx-auto">
+          <tbody>
+            <tr>
+              <td>No existen reclamos con ese titulo.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     {% endif %}
 {% endblock %}

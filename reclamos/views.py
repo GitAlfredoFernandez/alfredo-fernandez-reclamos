@@ -27,12 +27,14 @@ def reclamo_crear(request):
             
     return render(request, 'reclamos/reclamo-crear.html', {'formulario': formulario})
 
-
-
 class ReclamoListView(ListView):
     model = Reclamo
     template_name = 'reclamos/reclamo-listar.html'
     context_object_name = 'reclamos'
     
     def get_queryset(self):
-        return Reclamo.objects.select_related('reclamo_estado','reclamo_tipo')
+        queryset = super().get_queryset()
+        busqueda = self.request.GET.get("q", None)
+        if busqueda:
+            queryset = queryset.filter(titulo__icontains=busqueda)
+        return queryset
