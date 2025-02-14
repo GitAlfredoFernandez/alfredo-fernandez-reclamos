@@ -11,15 +11,36 @@
         </div>
       </div>
     {% if reclamos %}
-    <div class="container mt-4">
-        <ul class="list-group">
-            {% for reclamo in reclamos %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{reclamo}}
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+      <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+                  <tr>
+                      <th>Titulo</th>
+                      <th>Descripcion</th>
+                      <th>Autor</th>
+                      <th>Fecha</th>
+                      <th>Tipo</th>
+                      <th>Estado</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for reclamo in reclamos %}
+                  <tr>
+                      <td>{{reclamo.titulo}}</td>
+                      <td>{{reclamo.descripcion}}</td>
+                      <td>{{reclamo.autor}}</td>
+                      <td>{{reclamo.fecha}}</td>
+                      <td>{{reclamo.reclamo_tipo.nombre}}</td>
+                      <td>{{reclamo.reclamo_estado.nombre}}</td>
+                      <td>
+                        <a href="#" class="btn btn-sm btn-info">Detalle</a>
+                        <a href="#" class="btn btn-sm btn-warning">Cambiar</a>
+                        <a href="#" class="btn btn-sm btn-danger">Eliminar</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+          </table>
+      </div>
     {% else %}
     No existen reclamos cargados.
     {% endif %}

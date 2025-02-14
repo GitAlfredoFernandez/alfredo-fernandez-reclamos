@@ -1,9 +1,12 @@
 from django.contrib import admin
-from .models import Reclamo
+from .models import Reclamo, ReclamoEstado, ReclamoTipo
 
 @admin.register(Reclamo)
 class ReclamoAdmin(admin.ModelAdmin):
-    list_display = ['titulo', 'nombre_apellido', 'fecha', 'autor']
-    search_fields = ['titulo', 'nombre_apellido', 'descripcion']
+    list_display = ['titulo', 'fecha', 'autor']
+    search_fields = ['titulo', 'descripcion']
     ordering = ['-fecha']
     raw_id_fields = ['autor']
+
+admin.site.register(ReclamoEstado)
+admin.site.register(ReclamoTipo)

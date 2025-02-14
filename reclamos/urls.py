@@ -1,8 +1,8 @@
 from django.urls import path
-from reclamos.views import inicio, reclamo_crear, reclamo_listar
+from . import views
 
 urlpatterns = [
-    path('', inicio, name="inicio"),
-    path('reclamo-crear/', reclamo_crear, name="reclamo_crear"),
-    path('reclamo-listar/', reclamo_listar, name="reclamo_listar"),
+    path('', views.inicio, name="inicio"),
+    path('reclamo-crear/', views.reclamo_crear, name="reclamo_crear"),
+    path('reclamo-listar/', views.ReclamoListView.as_view(), name="reclamo_listar"),
 ]
