@@ -1,0 +1,18 @@
+{% extends 'reclamos/base.html' %} 
+{% block titulo %}Reclamo - Detalle{% endblock %} 
+{% block content %} 
+<div class="container mt-5">
+    <h1 class="mb-4">Detalle del Reclamo</h1> 
+    <ul class="list-group mb-4">
+        <li class="list-group-item"><strong>Titulo:</strong> {{ reclamo.titulo }}</li> 
+        <li class="list-group-item"><strong>Descripcion:</strong> {{ reclamo.descripcion }}</li> 
+        <li class="list-group-item"><strong>Fecha de Creacion:</strong> {{ reclamo.fecha_creacion }}</li> 
+        <li class="list-group-item"><strong>Estado:</strong> {{ reclamo.reclamo_estado }}</li> 
+        <li class="list-group-item"><strong>Tipo:</strong> {{ reclamo.reclamo_tipo }}</li> 
+        <li class="list-group-item"><strong>Usuario:</strong> {{ reclamo.autor }}</li> 
+    </ul>
+    <div class="text-center">
+        <a href="{% url 'reclamo_listar' %}" class="btn btn-primary">Volver a la lista de reclamos</a> 
+    </div>
+</div>
+{% endblock %}

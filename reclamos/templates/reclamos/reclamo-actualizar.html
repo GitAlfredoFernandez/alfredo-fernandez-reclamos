@@ -1,0 +1,31 @@
+
+{% extends 'reclamos/base.html' %}
+{% block titulo %}Reclamos Actualizar{% endblock %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h3 class="card-title text-center mb-4">Actualizar Reclamo</h3>
+
+<form method="post">
+    {% csrf_token %}
+            <div class="form-group mb-3">
+    {{ form.as_p }}
+    </div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="bi bi-check2-circle me-2"></i>Actualizar Reclamo
+              </button>
+            </div>
+</form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
