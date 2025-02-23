@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.shortcuts import render, get_object_or_404, redirect
+import os
 
 class ReclamoTipo(models.Model):
     nombre = models.CharField(max_length=50)
@@ -43,3 +46,10 @@ class Reclamo(models.Model):
     
     def __str__(self):
         return f'{self.titulo} ({self.reclamo_estado.nombre})'
+    
+class Profile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	image = models.ImageField(default='defaultuser.png')
+
+	def __str__(self):
+		return f'Perfil de {self.user.username}'

@@ -1,0 +1,11 @@
+{% extends 'reclamos/base.html' %} 
+
+{% block content %}
+¿Desea salir del sistema?
+<form class="form" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button type="submit" id="submit">Salir</button>
+</form>
+{% endblock %}

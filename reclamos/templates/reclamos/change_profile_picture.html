@@ -1,0 +1,11 @@
+{% extends 'reclamos/base.html' %} 
+{% block titulo %}Reclamos{% endblock %} 
+{% block content %} 
+<h2>Cambiar Foto de Perfil</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Cambios</button>
+</form>
+{% endblock %}

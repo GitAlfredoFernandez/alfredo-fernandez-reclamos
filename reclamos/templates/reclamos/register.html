@@ -1,0 +1,10 @@
+{% extends 'reclamos/base.html' %} 
+{% block titulo %}Reclamos{% endblock %} 
+{% block content %} 
+    <form class="form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" id="submit">Registrarse</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'reclamos/base.html' %} 
+{% block titulo %}Reclamos{% endblock %} 
+{% block content %} 
+    <div class="profile">
+        <img src="{{ user.profile.image.url }}">
+        <h2>{{ user.username }}</h2>
+
+        {% if request.user.is_authenticated %}
+            {% if user == request.user %}
+                <a href="{% url 'change_profile_picture' %}" class="customize-profile-link">Personalizar Perfil</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

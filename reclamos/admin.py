@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Reclamo, ReclamoEstado, ReclamoTipo
+from .models import Reclamo, ReclamoEstado, ReclamoTipo, Profile
 
 @admin.register(Reclamo)
 class ReclamoAdmin(admin.ModelAdmin):
@@ -10,3 +10,5 @@ class ReclamoAdmin(admin.ModelAdmin):
 
 admin.site.register(ReclamoEstado)
 admin.site.register(ReclamoTipo)
+
+admin.site.register(Profile)

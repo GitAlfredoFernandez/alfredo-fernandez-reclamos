@@ -34,6 +34,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href={% url "inicio" %}>Inicio</a>
                     </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url "profile" request.user.username %}>Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url "salir" %}>Cerrar Sesión</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url "login" %}>Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url "register" %}>Registrarse</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href={% url "reclamo_crear" %}>Crear Reclamos</a>
                     </li>

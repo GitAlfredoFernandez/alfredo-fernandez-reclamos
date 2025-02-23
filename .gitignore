@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Exclude content of the media folder but not the folder itself
+media/*
+!media/.gitkeep
+
