@@ -2,19 +2,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseForbidden
 from reclamos.models import Reclamo, ReclamoEstado, ReclamoTipo
-from reclamos.forms import ReclamoCrear, UserRegisterForm, ProfileForm,CustomLogoutForm
+from reclamos.forms import ReclamoCrear, UserRegisterForm, ProfileForm, CustomLogoutForm
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def inicio(request):
     # return HttpResponse("<h1>ESTE ES MI PRIMERA VISTA</h1>")
     return render(request, 'reclamos/inicio.html')
 
-
-def reclamo_crear(request,instance=None):
+@login_required
+def reclamo_crear(request, instance=None):
     # print(request.GET)
     # print(request.POST)
     current_user = get_object_or_404(User, pk=request.user.pk)
@@ -57,16 +58,20 @@ class ReclamoUpdateView(UpdateView):
     success_url = reverse_lazy('reclamo_listar')
 
 
-class ReclamoListView(ListView):
+class ReclamoListView(LoginRequiredMixin, ListView):
     model = Reclamo
     template_name = 'reclamos/reclamo-listar.html'
     context_object_name = 'reclamos'
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
     
     def get_queryset(self):
         queryset = super().get_queryset()
         busqueda = self.request.GET.get("q", None)
         if busqueda:
-            queryset = queryset.filter(titulo__icontains=busqueda)
+            queryset = queryset.filter(titulo__icontains=busqueda, autor=self.request.user)
+        else:
+            queryset = queryset.filter(autor=self.request.user)
         return queryset
     
 def register(request):
@@ -115,4 +120,4 @@ def custom_logout(request):
     context = {'form': form}
     return render(request, 'reclamos/logout.html', context)
 
-    return redirect('inicio') 
+    return redirect('inicio')

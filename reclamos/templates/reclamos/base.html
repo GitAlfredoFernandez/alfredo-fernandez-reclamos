@@ -42,7 +42,7 @@
                             <a class="nav-link" href={% url "reclamo_listar" %}>Listar Reclamos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href={% url "profile" request.user.username %}>Perfil</a>
+                            <a class="nav-link" href={% url "profile" request.user.username %}><img src="{{ user.profile.image.url }}" alt="" class="rounded-circle" width="30" height="30"> Perfil: {{ request.user.username }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href={% url "salir" %}>Cerrar Sesión</a>

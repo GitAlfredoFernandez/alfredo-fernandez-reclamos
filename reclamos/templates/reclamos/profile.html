@@ -2,9 +2,9 @@
 {% block titulo %}Reclamos{% endblock %} 
 {% block content %} 
     <div class="profile">
-        <img src="{{ user.profile.image.url }}">
         <h2>{{ user.username }}</h2>
-
+        <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle" width="30" height="30">
+        
         {% if request.user.is_authenticated %}
             {% if user == request.user %}
                 <a href="{% url 'change_profile_picture' %}" class="customize-profile-link">Personalizar Perfil</a>
