@@ -12,7 +12,8 @@
         <li class="list-group-item"><strong>Usuario:</strong> {{ reclamo.autor }}</li> 
     </ul>
     <div class="text-center">
-        <a href="{% url 'reclamo_listar' %}" class="btn btn-primary">Volver a la lista de reclamos</a> 
+        <a href="{% url 'galeria_fotos' reclamo.pk %}" class="btn btn-primary mt-4">Ver Galeria de Fotos</a>
+        <a href="{% url 'reclamo_listar' %}" class="btn btn-primary mt-4">Volver a la lista de reclamos</a> 
     </div>
 </div>
 {% endblock %}

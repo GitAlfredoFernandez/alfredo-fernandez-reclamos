@@ -18,4 +18,6 @@ urlpatterns = [
 	path('salir/', views.custom_logout, name='salir'),
     path('change_profile_picture/', views.change_profile_picture, name='change_profile_picture'),
     path('About Us/', views.about, name='about'),
+    path('reclamo/<int:reclamo_id>/galeria/', views.galeria_fotos, name='galeria_fotos'),
+    path('reclamo/<int:reclamo_id>/subir_foto/', views.galeria_fotos_upload, name='galeria_fotos_upload'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

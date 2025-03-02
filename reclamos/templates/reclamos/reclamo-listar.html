@@ -39,6 +39,7 @@
                         <a href="{% url 'reclamo_detalle' reclamo.pk %}" class="btn btn-sm btn-info">Detalle</a>
                         <a href="{% url 'reclamo_actualizar' reclamo.pk %}" class="btn btn-sm btn-warning">Cambiar</a>
                         <a href="{% url 'reclamo_eliminar' reclamo.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                        <a href="{% url 'galeria_fotos' reclamo.pk %}" class="btn btn-sm btn-success">Galeria</a>
                       </td>
                     </tr>
                     {% endfor %}

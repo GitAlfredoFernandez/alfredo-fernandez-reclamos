@@ -1,0 +1,23 @@
+{% extends 'reclamos/base.html' %} 
+{% block titulo %}Galería de Fotos - Reclamos{% endblock %} 
+{% block content %} 
+<div class="container d-flex flex-column align-items-center min-vh-100 text-center">
+    <h1 class="mb-4">Galería de Fotos para {{ reclamo.titulo }}</h1>
+    <div class="row">
+        {% for foto in fotos %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ foto.imagen.url }}" class="card-img-top" alt="{{ foto.descripcion }}">
+                <div class="card-body">
+                    <p class="card-text">{{ foto.descripcion }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center">
+        <a href="{% url 'galeria_fotos_upload' reclamo.id %}" class="btn btn-primary mt-4">Agregar Foto</a>
+        <a href="{% url 'reclamo_detalle' reclamo.id %}" class="btn btn-primary mt-4">Volver al Reclamo</a>
+    </div>
+</div>
+{% endblock %}

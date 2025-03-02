@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseForbidden
-from reclamos.models import Reclamo, ReclamoEstado, ReclamoTipo
-from reclamos.forms import ReclamoCrear, UserRegisterForm, ProfileForm, CustomLogoutForm
+from reclamos.models import Reclamo, ReclamoEstado, ReclamoTipo, GaleriaFotos
+from reclamos.forms import ReclamoCrear, UserRegisterForm, ProfileForm, CustomLogoutForm, GaleriaFotosForm
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -144,3 +144,24 @@ def custom_logout(request):
         form = CustomLogoutForm()
     context = {'form': form}
     return render(request, 'reclamos/logout.html', context)
+
+@login_required
+def galeria_fotos_upload(request, reclamo_id):
+    reclamo = get_object_or_404(Reclamo, id=reclamo_id)
+    if request.method == 'POST':
+        form = GaleriaFotosForm(request.POST, request.FILES)
+        if form.is_valid():
+            galeria_foto = form.save(commit=False)
+            galeria_foto.reclamo = reclamo
+            galeria_foto.save()
+            messages.success(request, 'Foto subida exitosamente.')
+            return redirect('galeria_fotos', reclamo_id=reclamo_id)
+    else:
+        form = GaleriaFotosForm()
+    return render(request, 'reclamos/galeria_fotos_upload.html', {'form': form, 'reclamo': reclamo})
+
+@login_required
+def galeria_fotos(request, reclamo_id):
+    reclamo = get_object_or_404(Reclamo, id=reclamo_id)
+    fotos = reclamo.fotos.all()
+    return render(request, 'reclamos/galeria_fotos.html', {'reclamo': reclamo, 'fotos': fotos})

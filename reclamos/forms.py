@@ -1,5 +1,5 @@
 from django import forms
-from .models import ReclamoTipo, ReclamoEstado, Profile
+from .models import ReclamoTipo, ReclamoEstado, Profile, GaleriaFotos
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth.models import User
 
@@ -50,3 +50,12 @@ class ProfileForm(forms.ModelForm):
 class CustomLogoutForm(forms.Form):
     model = User
     fields = []
+
+class GaleriaFotosForm(forms.ModelForm):
+    class Meta:
+        model = GaleriaFotos
+        fields = ['imagen', 'descripcion']
+        widgets = {
+            'imagen': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'descripcion': forms.TextInput(attrs={'class': 'form-control'}),
+        }

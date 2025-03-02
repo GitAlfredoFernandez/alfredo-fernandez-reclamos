@@ -1,0 +1,12 @@
+{% extends 'reclamos/base.html' %} 
+{% block titulo %}Subir Foto - Reclamos{% endblock %} 
+{% block content %} 
+<div class="container d-flex flex-column align-items-center min-vh-100 text-center">
+    <h1 class="mb-4">Subir Foto para {{ reclamo.titulo }}</h1>
+    <form class="form w-50" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100">Subir Foto</button>
+    </form>
+</div>
+{% endblock %}

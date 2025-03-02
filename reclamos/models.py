@@ -75,3 +75,11 @@ class Profile(models.Model):
                 raise ValidationError({'password': e.messages})
         self.user.save()
         super().save(*args, **kwargs)
+
+class GaleriaFotos(models.Model):
+    reclamo = models.ForeignKey(Reclamo, on_delete=models.CASCADE, related_name='fotos')
+    imagen = models.ImageField(upload_to='galeria_fotos/')
+    descripcion = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f'Foto de {self.reclamo.titulo}'
