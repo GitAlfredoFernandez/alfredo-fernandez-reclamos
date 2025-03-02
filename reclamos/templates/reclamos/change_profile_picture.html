@@ -1,11 +1,27 @@
 {% extends 'reclamos/base.html' %} 
 {% block titulo %}Reclamos{% endblock %} 
 {% block content %} 
-<h2>Cambiar Foto de Perfil</h2>
-
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
-</form>
+<div class="container d-flex flex-column align-items-center min-vh-100 text-center">
+    <h1 class="mb-4 text-center h3">Actualizar perfil usuario:</h1> 
+    <form class="form w-50" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table class="table table-bordered table-hover">
+            <tbody>
+                {% for field in form %}
+                <tr>
+                    <th class="text-end">{{ field.label_tag }}</th>
+                    <td>{{ field }}
+                        {% if field.errors %}
+                        <div class="invalid-feedback d-block">
+                          {{ field.errors }}
+                        </div>
+                      {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" id="submit" class="btn btn-primary w-100">Actualizar</button>
+    </form>
+</div>
 {% endblock %}

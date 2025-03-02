@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ValidationError
 
 def inicio(request):
     # return HttpResponse("<h1>ESTE ES MI PRIMERA VISTA</h1>")
@@ -42,12 +43,22 @@ class ReclamoDetailView(DetailView):
     template_name = 'reclamos/reclamo-detalle.html'
     context_object_name = 'reclamo'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['bootstrap_classes'] = 'container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center'
+        return context
+
 
 class ReclamoDeleteView(DeleteView):
     model = Reclamo
     template_name = 'reclamos/reclamo-eliminar.html'
     context_object_name = 'reclamo'
     success_url = reverse_lazy('reclamo_listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['bootstrap_classes'] = 'container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center'
+        return context
 
 
 class ReclamoUpdateView(UpdateView):
@@ -56,6 +67,11 @@ class ReclamoUpdateView(UpdateView):
     context_object_name = 'reclamo'
     fields = ['titulo', 'descripcion', 'reclamo_tipo', 'reclamo_estado']
     success_url = reverse_lazy('reclamo_listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['bootstrap_classes'] = 'container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center'
+        return context
 
 
 class ReclamoListView(LoginRequiredMixin, ListView):
@@ -73,7 +89,15 @@ class ReclamoListView(LoginRequiredMixin, ListView):
         else:
             queryset = queryset.filter(autor=self.request.user)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['bootstrap_classes'] = 'container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center'
+        return context
     
+def about(request):
+    return render(request, 'reclamos/about.html')
+
 def register(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
@@ -94,17 +118,18 @@ def profile(request, username=None):
 		user = User.objects.get(username=username)
 	else:
 		user = current_user
-        
-
 	return render(request, 'reclamos/profile.html', {'user':user})
 
 def change_profile_picture(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Tu perfil ha sido actualizado.')
-            return redirect('profile')  
+            try:
+                form.save()
+                messages.success(request, 'Tu perfil ha sido actualizado.')
+                return redirect('login')
+            except ValidationError as e:
+                form.add_error(None, e)
     else:
         form = ProfileForm(instance=request.user.profile)
 
@@ -119,5 +144,3 @@ def custom_logout(request):
         form = CustomLogoutForm()
     context = {'form': form}
     return render(request, 'reclamos/logout.html', context)
-
-    return redirect('inicio')

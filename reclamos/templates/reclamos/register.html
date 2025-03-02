@@ -1,10 +1,21 @@
 {% extends 'reclamos/base.html' %} 
 {% block titulo %}Reclamos{% endblock %} 
 {% block content %} 
-    <form class="form" method="post">
+<div class="container d-flex flex-column align-items-center min-vh-100 text-center">
+    <h1 class="mb-4 text-center h3">Registrarse:</h1> 
+    <form class="form w-50" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-
-        <button type="submit" id="submit">Registrarse</button>
+        <table class="table table-bordered table-hover">
+            <tbody>
+                {% for field in form %}
+                <tr>
+                    <th class="text-end">{{ field.label_tag }}</th>
+                    <td>{{ field }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" id="submit" class="btn btn-primary w-100">Registrarse</button>
     </form>
+</div>
 {% endblock %}

@@ -10,5 +10,4 @@ class ReclamoAdmin(admin.ModelAdmin):
 
 admin.site.register(ReclamoEstado)
 admin.site.register(ReclamoTipo)
-
 admin.site.register(Profile)

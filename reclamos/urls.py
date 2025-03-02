@@ -17,4 +17,5 @@ urlpatterns = [
 	path('login/', LoginView.as_view(template_name='reclamos/login.html'), name='login'),
 	path('salir/', views.custom_logout, name='salir'),
     path('change_profile_picture/', views.change_profile_picture, name='change_profile_picture'),
+    path('About Us/', views.about, name='about'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

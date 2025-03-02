@@ -1,10 +1,11 @@
 {% extends 'reclamos/base.html' %} 
 {% block titulo %}Lista de Reclamos{% endblock %} 
 {% block content %} 
-    <h1>Lista de reclamos</h1> 
+    
     <div class="container mt-4">
         <div class="row justify-content-center">
           <div class="col-md-6">
+            <h1 class="mb-4 text-center h3">Lista de reclamos</h1> 
             <form action="{% url 'reclamo_listar'%}" method="get" class="d-flex gap-2">
               <input type="text" name="q" placeholder="Buscar reclamo x titulo" class="form-control" type="submit">
             </form>
@@ -20,10 +21,10 @@
                   <tr>
                       <th>Titulo</th>
                       <th>Descripcion</th>
-                      <th>Autor</th>
                       <th>Fecha</th>
                       <th>Tipo</th>
                       <th>Estado</th>
+                      <th>Acciones</th>
                   </tr>
               </thead>
               <tbody>
@@ -31,7 +32,6 @@
                   <tr>
                       <td>{{reclamo.titulo}}</td>
                       <td>{{reclamo.descripcion}}</td>
-                      <td>{{reclamo.autor}}</td>
                       <td>{{reclamo.fecha}}</td>
                       <td>{{reclamo.reclamo_tipo.nombre}}</td>
                       <td>{{reclamo.reclamo_estado.nombre}}</td>
