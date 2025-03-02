@@ -20,7 +20,6 @@
             <thead>
                   <tr>
                       <th>Titulo</th>
-                      <th>Descripcion</th>
                       <th>Fecha</th>
                       <th>Tipo</th>
                       <th>Estado</th>
@@ -31,7 +30,6 @@
                   {% for reclamo in reclamos %}
                   <tr>
                       <td>{{reclamo.titulo}}</td>
-                      <td>{{reclamo.descripcion}}</td>
                       <td>{{reclamo.fecha}}</td>
                       <td>{{reclamo.reclamo_tipo.nombre}}</td>
                       <td>{{reclamo.reclamo_estado.nombre}}</td>
