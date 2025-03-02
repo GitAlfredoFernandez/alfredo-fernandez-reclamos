@@ -10,7 +10,13 @@
                 {% for field in form %}
                 <tr>
                     <th class="text-end">{{ field.label_tag }}</th>
-                    <td>{{ field }}</td>
+                    <td>{{ field }}
+                        {% if field.errors %}
+                        <div class="invalid-feedback d-block">
+                          {{ field.errors }}
+                        </div>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

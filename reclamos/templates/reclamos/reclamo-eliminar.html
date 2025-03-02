@@ -1,15 +1,16 @@
 {% extends 'reclamos/base.html' %} 
 {% block titulo %}Reclamos - Confirmar Eliminación{% endblock %} 
 {% block content %} 
-<p>¿Está seguro que desea eliminar el siguiente reclamo?</p> 
-
-<form method="post">
-    {% csrf_token %}
-    <p><strong>Titulo: </strong>{{ reclamo.titulo }}</p>
-    <p><strong>Descripción: </strong>{{ reclamo.descripcion }}</p>
-    <p><strong>Tipo: </strong>{{ reclamo.reclamo_tipo.nombre }}</p>
-    <p><strong>Estado: </strong>{{ reclamo.reclamo_estado.nombre }}</p>
-    <button type="submit" class="btn btn-danger">Eliminar</button> 	
-    <a href="{% url 'reclamo_listar' %}" class="btn btn-secondary">Cancelar</a> 
-</form> 
+<div class="container d-flex flex-column align-items-center min-vh-100 text-center">
+    <h1 class="mb-4 text-center h3">¿Está seguro que desea eliminar el siguiente reclamo?</h1> 
+    <form method="post">
+        {% csrf_token %}
+        <p><strong>Titulo: </strong>{{ reclamo.titulo }}</p>
+        <p><strong>Descripción: </strong>{{ reclamo.descripcion }}</p>
+        <p><strong>Tipo: </strong>{{ reclamo.reclamo_tipo.nombre }}</p>
+        <p><strong>Estado: </strong>{{ reclamo.reclamo_estado.nombre }}</p>
+        <button type="submit" class="btn btn-danger">Eliminar</button> 	
+        <a href="{% url 'reclamo_listar' %}" class="btn btn-secondary">Cancelar</a> 
+    </form>
+</div>
 {% endblock %}

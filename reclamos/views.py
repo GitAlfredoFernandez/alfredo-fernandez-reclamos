@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseForbidden
-from reclamos.models import Reclamo, ReclamoEstado, ReclamoTipo, GaleriaFotos
+from reclamos.models import Reclamo, ReclamoEstado, ReclamoTipo, GaleriaFotos, Profile
 from reclamos.forms import ReclamoCrear, UserRegisterForm, ProfileForm, CustomLogoutForm, GaleriaFotosForm
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.models import User
@@ -38,35 +38,40 @@ def reclamo_crear(request, instance=None):
     return render(request, 'reclamos/reclamo-crear.html', {'formulario': formulario})
 
 
-class ReclamoDetailView(DetailView):
+class ReclamoDetailView(LoginRequiredMixin,DetailView):
     model = Reclamo
     template_name = 'reclamos/reclamo-detalle.html'
     context_object_name = 'reclamo'
-
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['bootstrap_classes'] = 'container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center'
         return context
 
 
-class ReclamoDeleteView(DeleteView):
+class ReclamoDeleteView(LoginRequiredMixin,DeleteView):
     model = Reclamo
     template_name = 'reclamos/reclamo-eliminar.html'
     context_object_name = 'reclamo'
     success_url = reverse_lazy('reclamo_listar')
-
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['bootstrap_classes'] = 'container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center'
         return context
 
 
-class ReclamoUpdateView(UpdateView):
+class ReclamoUpdateView(LoginRequiredMixin,UpdateView):
     model = Reclamo
     template_name = 'reclamos/reclamo-actualizar.html'
     context_object_name = 'reclamo'
     fields = ['titulo', 'descripcion', 'reclamo_tipo', 'reclamo_estado']
     success_url = reverse_lazy('reclamo_listar')
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,19 +104,25 @@ def about(request):
     return render(request, 'reclamos/about.html')
 
 def register(request):
-	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
-		if form.is_valid():
-			form.save()
-			username = form.cleaned_data['username']
-			messages.success(request, f'Usuario {username} creado')
-			return redirect('reclamo_listar')
-	else:
-		form = UserRegisterForm()
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data['username']
+            # Actualizar el perfil creado por Django con la información del usuario
+            profile = Profile.objects.get(user=user)
+            profile.first_name = form.cleaned_data['first_name']
+            profile.last_name = form.cleaned_data['last_name']
+            profile.email = form.cleaned_data['email']
+            profile.save()
+            messages.success(request, f'Usuario {username} creado')
+            return redirect('reclamo_listar')
+    else:
+        form = UserRegisterForm()
+    context = { 'form' : form }
+    return render(request, 'reclamos/register.html', context)
 
-	context = { 'form' : form }
-	return render(request, 'reclamos/register.html', context)
-
+@login_required
 def profile(request, username=None):
 	current_user = request.user
 	if username and username != current_user.username:
@@ -120,6 +131,7 @@ def profile(request, username=None):
 		user = current_user
 	return render(request, 'reclamos/profile.html', {'user':user})
 
+@login_required
 def change_profile_picture(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -127,7 +139,9 @@ def change_profile_picture(request):
             try:
                 form.save()
                 messages.success(request, 'Tu perfil ha sido actualizado.')
-                return redirect('login')
+                if form.cleaned_data.get('password'):
+                    return redirect('login')
+                return redirect('profile')
             except ValidationError as e:
                 form.add_error(None, e)
     else:

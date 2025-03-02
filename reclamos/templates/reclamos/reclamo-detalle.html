@@ -9,10 +9,11 @@
         <li class="list-group-item"><strong>Fecha de Creacion:</strong> {{ reclamo.fecha }}</li> 
         <li class="list-group-item"><strong>Estado:</strong> {{ reclamo.reclamo_estado }}</li> 
         <li class="list-group-item"><strong>Tipo:</strong> {{ reclamo.reclamo_tipo }}</li> 
-        <li class="list-group-item"><strong>Usuario:</strong> {{ reclamo.autor }}</li> 
+        <li class="list-group-item"><strong>Usuario:</strong> {{ reclamo.autor }}</li>
+        <li class="list-group-item"><a href="{% url 'galeria_fotos' reclamo.pk %}" class="btn btn-sm btn-success mt-4">Ver Galeria de Fotos</a></li>
     </ul>
     <div class="text-center">
-        <a href="{% url 'galeria_fotos' reclamo.pk %}" class="btn btn-primary mt-4">Ver Galeria de Fotos</a>
+        
         <a href="{% url 'reclamo_listar' %}" class="btn btn-primary mt-4">Volver a la lista de reclamos</a> 
     </div>
 </div>
